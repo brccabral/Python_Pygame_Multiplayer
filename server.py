@@ -29,19 +29,26 @@ def make_pos(tup):
 pos = [(0,0),(100,100)]
 
 def threaded_client(conn:sk, player):
-    conn.send(str.encode("Connected"))
+    conn.send(str.encode(make_pos(pos[player])))
     reply = ""
     while True:
         try:
-            data = conn.recv(2048) # bytes to receive
-            reply = data.decode("utf-8")
+            # 2048 bytes to receive
+            data = read_pos(conn.recv(2048).decode("utf-8") )
+            pos[player] = data
+
             if not data:
                 print("Disconnected")
                 break
             else:
-                print("Received: ", reply)
+                if player == 1:
+                    reply = pos[0]
+                else:
+                    reply = pos[1]
+                
+                print("Received: ", data)
                 print("Sending: ", reply)
-            conn.sendall(str.encode(reply))
+            conn.sendall(str.encode(make_pos(reply)))
         except Exception as e:
             print(e)
             break
