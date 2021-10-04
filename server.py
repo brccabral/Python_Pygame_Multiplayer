@@ -12,3 +12,10 @@ try:
     s.bind((server, port))
 except socket.error as e:
     str(e)
+
+s.listen(2)
+print("Waiting for connection, Server Started!")
+
+def threaded_client(conn):
+    pass
+
