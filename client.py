@@ -20,11 +20,13 @@ def redrawWindow(win:pygame.Surface, player:Player, player2:Player):
 def main():
     run = True
     n = Network()
+    p = n.getP()
 
     clock = pygame.time.Clock()
 
     while run:
         clock.tick(60)
+        p2 = n.send(p)
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

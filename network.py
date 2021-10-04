@@ -8,7 +8,6 @@ class Network:
         self.port = 5555
         self.addr = (self.server, self.port)
         self.p = self.connect()
-        # print(self.id)
     
     def getP(self):
         return self.p
@@ -26,7 +25,3 @@ class Network:
             return pickle.loads(self.client.recv(2048))
         except socket.error as e:
             print(e)
-
-# n = Network()
-# print(n.send("Hello"))
-# print(n.send("working"))
