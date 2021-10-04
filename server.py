@@ -32,8 +32,8 @@ def threaded_client(conn:sk):
                 print("Received: ", reply)
                 print("Sending: ", reply)
             conn.sendall(str.encode(reply))
-        except e:
-            print(e.strerror)
+        except Exception as e:
+            print(e)
             break
     print("Lost connection")
     conn.close()
