@@ -14,7 +14,7 @@ class Game:
         """
         return self.moves[p]
     
-    def player_controller(self, player, move):
+    def play(self, player, move):
         self.moves[player]= move
         if player == 0:
             self.p1Went = True

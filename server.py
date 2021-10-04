@@ -46,7 +46,7 @@ def threaded_client(conn:sk, player, gameId):
                 if data == "reset":
                     game.resetWent()
                 elif data != "get":
-                    game.player_controller(p, data)
+                    game.play(p, data)
 
                 reply = game
                 conn.sendall(pickle.dumps(reply))
