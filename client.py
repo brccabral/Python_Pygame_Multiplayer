@@ -52,10 +52,31 @@ def main():
     while run:
         clock.tick(60)
         try:
-            game = n.send("get")
+            game: Game = n.send("get")
         except:
             run = False
             print("Couldn't get game")
             break
+
+        if game.bothWent():
+            redrawWindow()
+            pygame.time.delay(200)
+            try:
+                game: Game = n.send("reset")
+            except:
+                run = False
+                print("Couldn't reset game")
+                break
+
+            font = pygame.font.SysFont("comicsans", 90)
+            if (game.winner() == 1 and player == 1) or (game.winner() == 0 and player == 0):
+                text = font.render("You Won!", 1, (255,0,0))
+            elif game.winner == -1:
+                text = font.render("Tie Game!", 1, (255,0,0))
+            else:
+                text = font.render("You Lost...", 1, (255,0,0))
+            win.blit(text, (width/2 - text.get_width()/2, height/2 - text.get_height()/2))
+            pygame.display.update()
+            pygame.time.delay(2000)
 
 main()
