@@ -38,7 +38,17 @@ class Button:
 
 def redrawWindow(win:pygame.Surface, game:Game, player:Player):
     win.fill((128,128,128))
-    pass
+    if not(game.connected()):
+        font = pygame.font.SysFont("comicsans", 80)
+        text = font.render("Waiting for Player...", 1, (255,0,0), True)
+        win.blit(text, (width/2-text.get_width()/2, height-text.get_height()/2))
+    else:
+        font = pygame.font.SysFont("comicsans", 60)
+        text = font.render("Your move", 1, (0,255,255))
+        win.blit(text, (80,200))
+        text = font.render("Opponents", 1, (0,255,255))
+        win.blit(text, (380,200))
+
 
 btns = [Button("Rock", 50, 500, (0,0,0)), Button(250, 500, (255,0,0)), Button("Paper", 450, 500, (0,255,0))]
 
@@ -95,6 +105,7 @@ def main():
                         else:
                             if not game.p2Went:
                                 n.send(btn.text)
+        redrawWindow(win, game, player)
 
 
 main()
