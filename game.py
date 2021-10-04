@@ -21,3 +21,5 @@ class Game:
         else:
             self.p2Went = True
     
+    def bothWent(self):
+        return self.p1Went and self.p2Went
