@@ -29,7 +29,27 @@ games = {}
 idCount = 0
 
 def threaded_client(conn:sk, player, gameId):
-    pass
+    global idCount
+    conn.send(str.encode(str(p)))
+    reply = ""
+    while True:
+        # data can be three actions: reset, get, move
+        data = conn.recv(4096).decode()
+
+        # check if game still exists
+        if gameId in games:
+            game: Game = games[gameId]
+
+            if not data:
+                break
+            else:
+                if data == "reset":
+                    game.resetWent()
+                elif data != "get":
+                    game.player_controller(p, data)
+
+                reply = game
+                conn.sendall(pickle.dumps(reply))
 
 while True:
     conn, addr = s.accept()
