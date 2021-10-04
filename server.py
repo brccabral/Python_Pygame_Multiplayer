@@ -1,8 +1,11 @@
 from os import error
+import pickle
 import socket
 from _socket import socket as sk
 from _thread import *
 import sys
+
+from player import Player
 
 # Win = ipconfig
 # Ubuntu = ip a
@@ -19,36 +22,29 @@ except socket.error as e:
 s.listen(2)
 print("Waiting for connection, Server Started!")
 
-def read_pos(pos_str:str):
-    split_str = pos_str.split(",")
-    return int(split_str[0]), int(split_str[1])
-
-def make_pos(tup):
-    return str(tup[0])+","+str(tup[1])
-
-pos = [(0,0),(100,100)]
+players = [Player(0,0,50,50,(255,0,0)), Player(100,100,50,50,(0,255,0))]
 
 def threaded_client(conn:sk, player):
-    conn.send(str.encode(make_pos(pos[player])))
+    conn.send(pickle.dumps(players[player]))
     reply = ""
     while True:
         try:
             # 2048 bytes to receive
-            data = read_pos(conn.recv(2048).decode("utf-8") )
-            pos[player] = data
+            data = pickle.loads(conn.recv(2048))
+            players[player] = data
 
             if not data:
                 print("Disconnected")
                 break
             else:
                 if player == 1:
-                    reply = pos[0]
+                    reply = players[0]
                 else:
-                    reply = pos[1]
+                    reply = players[1]
                 
                 print("Received: ", data)
                 print("Sending: ", reply)
-            conn.sendall(str.encode(make_pos(reply)))
+            conn.sendall(pickle.dumps(reply))
         except Exception as e:
             print(e)
             break
