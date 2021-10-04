@@ -19,7 +19,16 @@ except socket.error as e:
 s.listen(2)
 print("Waiting for connection, Server Started!")
 
-def threaded_client(conn:sk):
+def read_pos(pos_str:str):
+    split_str = pos_str.split(",")
+    return int(split_str[0]), int(split_str[1])
+
+def make_pos(tup):
+    return str(tup[0])+","+str(tup[1])
+
+pos = [(0,0),(100,100)]
+
+def threaded_client(conn:sk, player):
     conn.send(str.encode("Connected"))
     reply = ""
     while True:
@@ -39,9 +48,10 @@ def threaded_client(conn:sk):
     print("Lost connection")
     conn.close()
 
-
+currentPlayer = 0
 while True:
     conn, addr = s.accept()
     print("Connected to: ", addr)
 
-    start_new_thread(threaded_client, (conn,))
+    start_new_thread(threaded_client, (conn,currentPlayer))
+    currentPlayer += 1
