@@ -1,6 +1,7 @@
 from os import error
 import socket
-import _thread
+from _socket import socket as sk
+from _thread import *
 import sys
 
 server = ""
@@ -16,6 +17,25 @@ except socket.error as e:
 s.listen(2)
 print("Waiting for connection, Server Started!")
 
-def threaded_client(conn):
-    pass
+def threaded_client(conn:sk):
+    reply = ""
+    while True:
+        try:
+            data = conn.recv(2048) # bytes to receive
+            reply = data.decode("utf-8")
+            if not data:
+                print("Disconnected")
+                break
+            else:
+                print("Received: ", reply)
+                print("Sending: ", reply)
+            conn.sendall(str.encode(reply))
+        except e:
+            print(e.strerror)
+            break
 
+while True:
+    conn, addr = s.accept()
+    print("Connected to: ", addr)
+
+    start_new_thread(threaded_client, (conn,))
