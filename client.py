@@ -35,6 +35,12 @@ class Player():
             self.y += self.vel
         self.rect = (self.x,self.y,self.width,self.height)
 
+def read_pos(pos_str:str):
+    split_str = pos_str.split(",")
+    return int(split_str[0]), int(split_str[1])
+
+def make_pos(tup):
+    return str(tup[0])+","+str(tup[1])
 
 def redrawWindow(win:pygame.Surface,player:Player):
     win.fill((255,255,255))
