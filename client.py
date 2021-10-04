@@ -17,6 +17,9 @@ class Player():
         self.height = height
         self.color = color
         self.rect = (x,y,width,height)
+    def draw(self, win):
+        pygame.draw.rect(win, self.color, self.rect)
+    
 
 def redrawWindow():
     win.fill((255,255,255))
