@@ -7,3 +7,10 @@ class Game:
         self.moves = [None, None]
         self.wins = [0,0]
         self.ties = 0
+    def get_player_move(self, p):
+        """
+        :param p: [0,1]
+        :return: Move
+        """
+        return self.moves[p]
+    
