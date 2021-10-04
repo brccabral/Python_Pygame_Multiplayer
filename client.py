@@ -71,6 +71,6 @@ def main():
                 pygame.quit()
                 exit()
         p.move()
-        redrawWindow(win, p)
+        redrawWindow(win, p, p2)
 
 main()
