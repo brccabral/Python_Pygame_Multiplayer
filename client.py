@@ -77,6 +77,11 @@ def redrawWindow(win:pygame.Surface, game:Game, playerIndex):
                 win.blit(text1, (100,350))
                 win.blit(text2, (400,350))
 
+        for btn in btns:
+            btn.draw(win)
+
+    pygame.display.update()
+
 
 btns = [Button("Rock", 50, 500, (0,0,0)), Button(250, 500, (255,0,0)), Button("Paper", 450, 500, (0,255,0))]
 
