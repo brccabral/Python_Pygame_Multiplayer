@@ -28,9 +28,9 @@ connected = set()
 games = {}
 idCount = 0
 
-def threaded_client(conn:sk, player, gameId):
+def threaded_client(conn:sk, playerIndex, gameId):
     global idCount
-    conn.send(str.encode(str(p)))
+    conn.send(str.encode(str(playerIndex)))
     reply = ""
     while True:
         try:
@@ -47,7 +47,7 @@ def threaded_client(conn:sk, player, gameId):
                     if data == "reset":
                         game.resetWent()
                     elif data != "get":
-                        game.play(p, data)
+                        game.play(playerIndex, data)
 
                     reply = game
                     conn.sendall(pickle.dumps(reply))
@@ -75,7 +75,7 @@ while True:
     print("Connected to: ", addr)
 
     idCount += 1
-    p = 0
+    playerIndex = 0
     # with 10 players we need 5 games
     gameId = (idCount - 1)//2
     # if id is odd, it means we need a new Game
@@ -84,6 +84,6 @@ while True:
         print("Creating a new game...")
     else:
         games[gameId].ready = True
-        p = 1
+        playerIndex = 1
 
-    start_new_thread(threaded_client, (conn, p, gameId))
+    start_new_thread(threaded_client, (conn, playerIndex, gameId))

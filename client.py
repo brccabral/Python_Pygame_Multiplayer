@@ -51,7 +51,7 @@ def redrawWindow(win:pygame.Surface, game:Game, playerIndex):
 
         move1 = game.get_player_move(0)
         move2 = game.get_player_move(1)
-
+        
         if game.bothWent():
             text1 = font.render(move1, 1, (0,0,0))
             text2 = font.render(move2, 1, (0,0,0))
