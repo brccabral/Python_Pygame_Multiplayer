@@ -70,12 +70,12 @@ def redrawWindow(win:pygame.Surface, game:Game, playerIndex):
             else:
                 text2 = font.render("Waiting...", 1, (0,0,0))
 
-            if playerIndex == 1:
-                win.blit(text2, (100,350))
-                win.blit(text1, (400,350))
-            else:
-                win.blit(text1, (100,350))
-                win.blit(text2, (400,350))
+        if playerIndex == 1:
+            win.blit(text2, (100,350))
+            win.blit(text1, (400,350))
+        else:
+            win.blit(text1, (100,350))
+            win.blit(text2, (400,350))
 
         for btn in btns:
             btn.draw(win)
