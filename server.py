@@ -53,7 +53,8 @@ def threaded_client(conn:sk, player, gameId):
                     conn.sendall(pickle.dumps(reply))
             else:
                 break
-        except:
+        except Exception as e:
+            print(e)
             break
     
     print("Lost connection")
