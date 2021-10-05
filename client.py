@@ -102,7 +102,7 @@ def main():
             break
 
         if game.bothWent():
-            redrawWindow()
+            redrawWindow(win, game, playerIndex)
             pygame.time.delay(200)
             try:
                 game: Game = n.send("reset")
