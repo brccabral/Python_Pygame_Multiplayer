@@ -3,6 +3,7 @@ import pygame
 from game import Game
 from network import Network
 from player import Player
+from sys import exit
 
 width = 700
 height = 700

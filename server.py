@@ -1,12 +1,8 @@
-from os import error
 import pickle
 import socket
 from _socket import socket as sk
 from _thread import *
-import sys
 from game import Game
-
-from player import Player
 
 # Win = ipconfig
 # Ubuntu = ip a
