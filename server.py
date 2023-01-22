@@ -1,8 +1,9 @@
 import pickle
 import socket
 from _socket import socket as sk
-from _thread import *
+from _thread import start_new_thread
 from game import Game
+
 
 # Win = ipconfig
 # Ubuntu = ip a
@@ -24,7 +25,8 @@ connected = set()
 games = {}
 idCount = 0
 
-def threaded_client(conn:sk, playerIndex, gameId):
+
+def threaded_client(conn: sk, playerIndex, gameId):
     global idCount
     conn.send(str.encode(str(playerIndex)))
     reply = ""
@@ -52,19 +54,20 @@ def threaded_client(conn:sk, playerIndex, gameId):
         except Exception as e:
             print(e)
             break
-    
+
     print("Lost connection")
 
-    # if both players close, the first player 
+    # if both players close, the first player
     # will delete the game before the other player
     try:
         del games[gameId]
         print("Closing Game", gameId)
-    except:
+    except Exception:
         pass
-    
+
     idCount -= 1
     conn.close()
+
 
 while True:
     conn, addr = s.accept()
@@ -73,7 +76,7 @@ while True:
     idCount += 1
     playerIndex = 0
     # with 10 players we need 5 games
-    gameId = (idCount - 1)//2
+    gameId = (idCount - 1) // 2
     # if id is odd, it means we need a new Game
     if idCount % 2 == 1:
         games[gameId] = Game(gameId)
